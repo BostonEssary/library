@@ -1,0 +1,15 @@
+.card-container {
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.book-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
