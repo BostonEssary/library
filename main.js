@@ -79,8 +79,17 @@ function catchSubmission(){
         const title = formData.get('title');
         const pages = formData.get('pages');
         const read = formData.get('read');
-        addBookToLibrary(author, title, pages, read)
+        addBookToLibrary(author, title, pages, read);
+        clearForm(bookForm);
     }) 
+}
+
+
+function clearForm(form){
+    const inputs = form.getElementsByTagName('input');
+    for (const input of inputs) {
+        input.value = ''
+    }
 }
 
 
