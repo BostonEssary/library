@@ -15,6 +15,10 @@ function Book(title, author, pages, read) {
     }
 }
 
+Book.prototype.changeReadStatus = function() {
+    this.read = !this.read
+}
+
 function addBookToLibrary(title, author, pages, read) {
     let newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
@@ -27,7 +31,10 @@ function bookCard(book){
     const author = document.createElement('h4');
     const pages = document.createElement('p');
     const read = document.createElement('p');
+    const deleteButton = addDeleteButton();
+    const readButton = addToggleReadButton();
     cardContainer.classList.add('card-container');
+    cardContainer.dataset.id = book.id
     titleHeader.innerHTML = book.title;
     author.innerHTML = `By ${book.author}`;
     pages.innerHTML = `Pages: ${book.pages}`;
@@ -36,6 +43,8 @@ function bookCard(book){
     cardContainer.appendChild(author);
     cardContainer.appendChild(pages);
     cardContainer.appendChild(read);
+    cardContainer.appendChild(deleteButton)
+    cardContainer.appendChild(readButton);
     return cardContainer;
 }
 
@@ -43,6 +52,43 @@ function showNewBook(book){
     let newBook = bookCard(book);
     const booksContainer = document.getElementById('books-container');
     booksContainer.appendChild(newBook);
+}
+
+function addDeleteButton(){
+    const deleteButton = document.createElement('button')
+    deleteButton.classList.add('delete-button')
+    deleteButton.innerHTML = 'Delete';
+    deleteButton.addEventListener('click', (event) => {
+        const bookCard = event.target.parentElement;
+        const bookId = bookCard.dataset.id
+        myLibrary.forEach((book) => {
+            if (book.id === bookId){
+                const index = myLibrary.indexOf(book);
+                myLibrary.splice(index, 1);
+            }
+        })
+        bookCard.remove()
+    })
+    return deleteButton
+}
+
+function addToggleReadButton(){
+    const readButton = document.createElement('button');
+    readButton.classList.add('read-button');
+    readButton.innerHTML = 'Read?'
+    readButton.addEventListener('click', (event) => {
+        const card = event.target.parentElement;
+        const bookId = card.dataset.id
+        myLibrary.forEach((book) => {
+            if (book.id === bookId){
+                book.changeReadStatus()
+                card.replaceWith(bookCard(book))
+            }
+        })
+       
+    })
+
+    return readButton
 }
 
 

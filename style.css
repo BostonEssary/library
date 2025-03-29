@@ -13,3 +13,12 @@
     display: flex;
     flex-direction: column;
 }
+
+.delete-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: .5em;
+    border-radius: 5px;
+    cursor: pointer;
+}
